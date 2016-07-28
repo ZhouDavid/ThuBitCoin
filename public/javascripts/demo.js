@@ -1,8 +1,11 @@
 var init_num = 200;
 var num = init_num;
+var max_num = 2530;
 function redraw(){
-    HumbleFinance.append(priceData.slice(num,num+1),volumeData.slice(num,num+1),priceData.slice(num,num+1));
-    num=num+1;
+    if(num<2530){
+        HumbleFinance.append(priceData.slice(num,num+1),volumeData.slice(num,num+1),priceData.slice(num,num+1));
+        num=num+1;
+    }
 }
 
 
@@ -25,7 +28,7 @@ Event.observe(document, 'dom:loaded', function() {
             return false;
         }
         
-        return '$'+n;
+        return '￥'+n;
     };
     
     HumbleFinance.xTickFormatter = function (n) { 

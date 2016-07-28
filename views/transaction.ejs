@@ -491,12 +491,12 @@ width:auto;
                     <ul ng-show="market==='cnybtc'">
                         <li class="ng-binding">北京时间
                             <p>
-                                <span class="last-cnybtc-live-ticker"><%=datetime[0]%></span>
+                                <span id="Beijing_time" class="last-cnybtc-live-ticker"><%=datetime[0]%></span>
                             </p>
                         </li>
                         <li class="ng-binding">最新价格
                             <p>
-                                ¥<span class="last-cnybtc-live-ticker"><%=price[0]%></span>
+                                ¥<span id="newest_price" class="last-cnybtc-live-ticker"><%=price[0]%></span>
                             </p>
                         </li>
             <!--             <li class="ng-binding">买一 / 卖一
@@ -506,11 +506,9 @@ width:auto;
                             </p>
                         </li> -->
                           <li class="ng-binding">买卖决定
-                            <p><% if(buy[0]){ %>
-                                <span class="buy-color"><span id="buy_cnybtc">买</span></span> 
-                              <% }else{ %>
-                                <span class="sell-color"><span id="sell_cnybtc">卖</span></span>
-                              <% } %>
+                            <p>
+                               <span id="buy_cnybtc" class="buy-color"><span >买</span></span> 
+                               <span  id="sell_cnybtc" class="sell-color"><span>卖</span></span>
                             </p>
                          </li>
                        <!--  <li class="ng-binding">价格范围
@@ -809,7 +807,30 @@ jQuery(function($){
 
 <script src="javascripts/magnific-popup.js" type="text/javascript"></script><script src="javascripts/jquery_006.js" type="text/javascript"></script>
 <script src="javascripts/bitCoinData.js"></script>
-<script>
+<script> 
+  var i = 0;
+  var beijing_time = '<%=datetime%>';
+  var newest_price = '<%=price%>';
+  var final_decision = '<%=buy%>';
+  beijing_time = beijing_time.split(','); 
+  newest_price = newest_price.split(',');
+  final_decision = final_decision.split(',');
+  function refresh(){
+    jQuery("#Beijing_time").text(beijing_time[i]);
+    jQuery("#newest_price").text(newest_price[i]);
+    if(final_decision[i]=='1'){
+      jQuery("#buy_cnybtc").show();
+      jQuery("#sell_cnybtc").hide();
+    }
+    else{
+      jQuery("#buy_cnybtc").hide();
+      jQuery("#sell_cnybtc").show();
+    }
+    jQuery("#final_decision").text(final_decision[i]);
+    i++;
+  }
+
+  setInterval("refresh()",2000);
   setInterval("redraw()",2000);
 </script>
 </body></html>

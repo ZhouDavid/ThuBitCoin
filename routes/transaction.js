@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
-var data = fs.readFileSync('./public/data/smalloutput.txt','utf-8')
+var data = fs.readFileSync('./public/data/final.txt','utf-8')
 
 var lines = data.split('\n')
 function mySplit(line){
