@@ -1,7 +1,5 @@
-var express = require('express');
-var router = express.Router();
 var fs = require('fs');
-var data = fs.readFileSync('./public/data/smalloutput.txt','utf-8')
+var data = fs.readFileSync('final.txt','utf-8')
 
 var lines = data.split('\n')
 function mySplit(line){
@@ -54,7 +52,7 @@ function genPriceData(price){
 function genVolumeData(volume){
 	var volumeData=[];
 	for(var i = 0;i<volume.length;i++){
-		volumeData.push([i,volume[i]]);
+		volumeData.push([i,volume[i]*1]);
 	}
 	return volumeData;
 }
@@ -74,11 +72,12 @@ function genSummaryData(data,num){
 function genJsonData(datetime,price,volume){
 	var jsonData = [];
 	var len = datetime.length;
-	var tmp ={};
+
 	for(var i = 0;i<len;i++){
+		var tmp ={};
 		tmp.datetime = datetime[i];
 		tmp.price = price[i];
-		tmp.volume = volume[i];
+		tmp.volume = volume[i]*1;
 		jsonData.push(tmp);
 	}
 	return jsonData;
@@ -90,7 +89,7 @@ RMBAccount = [];
 BTCAccount = [];
 volume = [];
 buy = [];
-
+console.log(lines.length);
 for(var i=0;i<lines.length;i++){
 	var record = mySplit(lines[i]);
 	datetime.push(transferTime(record[0]));
@@ -101,16 +100,12 @@ for(var i=0;i<lines.length;i++){
 	buy.push(getProb(record[1]));
 }
 
-// var priceData=genPriceData(price);
-// var volumeData=genVolumeData(volume);
-// var summaryData=genSummaryData(priceData,100);
-// var jsonData=genJsonData(datetime,price,volume);
-// var myData=JSON.stringify(priceData)+'\n'+JSON.stringify(volumeData)+'\n'+JSON.stringify(summaryData)+'\n'+JSON.stringify(jsonData);
-// fs.writeFile('bitCoinData.js',myData);
-router.get('/', function(req, res, next) {
-	res.render('transaction',{datetime:datetime,price:price,buy:buy});
-});
+var priceData=genPriceData(price);
+var volumeData=genVolumeData(volume);
+var summaryData=genSummaryData(priceData,100);
+var jsonData=genJsonData(datetime,price,volume);
+var myData='var priceData = '+JSON.stringify(priceData)+';\n'+'var volumeData = '+JSON.stringify(volumeData)+';\n'+'var summaryData = '+JSON.stringify(summaryData)+';\n'+'var jsonData = '+JSON.stringify(jsonData)+';';
+fs.writeFile('bitCoinData.js',myData);
 
 
 
-module.exports = router;

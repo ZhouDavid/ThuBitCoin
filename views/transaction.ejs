@@ -3,8 +3,19 @@
 
 <head>
 <link rel="stylesheet" href="stylesheets/exchange-53de4da122.css"><meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="stylesheets/hsd.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/finance.css" />
 <script async="" src="javascripts/www-widgetapi.js" id="www-widgetapi-script" type="text/javascript"></script>
-
+<script src="javascripts/hsd.js"></script>
+<script src="javascripts/prototype.min.js"></script>
+<script src="javascripts/Finance.js"></script>
+<script src="javascripts/excanvas.js"></script>
+<script src="javascripts/base64.js"></script>
+<script src="javascripts/canvas2image.js"></script>
+<script src="javascripts/canvastext.js"></script>
+<script src="javascripts/flotr.js"></script>
+<script src="javascripts/HumbleFinance.js"></script>
+<script src="javascripts/demo.js"></script>  
 <!-- meta -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -475,25 +486,34 @@ width:auto;
     <section class="container-fixed">
         <section class="main-content">
             <section class="ng-scope" id="market_list" ng-controller="MarketsCtrl">
-                <ul class="nav nav-pills" role="tablist">
-                    <li class="active" ng-class="{true:'active'}[market==='cnybtc']"><a ng-click="switchMarket('cnybtc')">BTC/CNY</a></li>
-                    <li ng-class="{true:'active'}[market==='cnyltc']"><a ng-click="switchMarket('cnyltc')">LTC/CNY</a></li>
-                    <li ng-class="{true:'active'}[market==='btcltc']"><a ng-click="switchMarket('btcltc')">LTC/BTC</a></li>
-                </ul>
+              
                 <div class="live-ticker ng-scope" ng-controller="TickerCtrl">
                     <ul ng-show="market==='cnybtc'">
-                        <li class="ng-binding">最新成交价
+                        <li class="ng-binding">北京时间
                             <p>
-                                ¥<span class="last-cnybtc-live-ticker">4,355.00</span>
+                                <span class="last-cnybtc-live-ticker"><%=datetime[0]%></span>
                             </p>
                         </li>
-                        <li class="ng-binding">买一 / 卖一
+                        <li class="ng-binding">最新价格
+                            <p>
+                                ¥<span class="last-cnybtc-live-ticker"><%=price[0]%></span>
+                            </p>
+                        </li>
+            <!--             <li class="ng-binding">买一 / 卖一
                             <p>
                                 <span class="buy-color">¥<span id="buy_cnybtc">4,355.10</span></span> /
                                 <span class="sell-color">¥<span id="sell_cnybtc">4,356.79</span></span>
                             </p>
-                        </li>
-                        <li class="ng-binding">价格范围
+                        </li> -->
+                          <li class="ng-binding">买卖决定
+                            <p><% if(buy[0]){ %>
+                                <span class="buy-color"><span id="buy_cnybtc">买</span></span> 
+                              <% }else{ %>
+                                <span class="sell-color"><span id="sell_cnybtc">卖</span></span>
+                              <% } %>
+                            </p>
+                         </li>
+                       <!--  <li class="ng-binding">价格范围
                             <p>
                                 ¥<span id="low_cnybtc">4,311.00</span> - ¥<span id="high_cnybtc">4,381.00</span>
                             </p>
@@ -502,14 +522,33 @@ width:auto;
                             成交量
                             <p>฿<span class="vol-cnybtc">123,369.173</span>
                             </p>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
               </section>
             </section>
           </section>
         </article>
-        
+  
+<div id="content-container">
+  <div id="content">
+    <div id="finance">
+      <div id="labels">
+        <div id="financeTitle">
+          比特币现值变化曲线</div>
+        <div id="time">
+          <a onclick="HumbleFinance.zoom(5);">10m</a>
+          <a onclick="HumbleFinance.zoom(21);">1h</a>
+          <a onclick="HumbleFinance.zoom(65);">1d</a>
+          <a onclick="HumbleFinance.zoom(127);">3d</a>
+          <a onclick="HumbleFinance.zoom(254);">7d</a>
+          <a onclick="HumbleFinance.zoom(1265);">30d</a> </div>
+        <div id="dateRange">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>        
   
 <script>document.write("<style type=\"text/css\">.tp-caption.Fashion-BigDisplay,.Fashion-BigDisplay{color:rgba(0,0,0,1.00);font-size:60px;line-height:60px;font-weight:900;font-style:normal;font-family:Raleway;padding:0 0 0 0;text-decoration:none;background-color:transparent;border-color:transparent;border-style:none;border-width:0;border-radius:0 0 0 0;letter-spacing:2px}</style>");</script><style type="text/css">.tp-caption.Fashion-BigDisplay,.Fashion-BigDisplay{color:rgba(0,0,0,1.00);font-size:60px;line-height:60px;font-weight:900;font-style:normal;font-family:Raleway;padding:0 0 0 0;text-decoration:none;background-color:transparent;border-color:transparent;border-style:none;border-width:0;border-radius:0 0 0 0;letter-spacing:2px}</style>
     <script type="text/javascript">
@@ -769,7 +808,8 @@ jQuery(function($){
   
 
 <script src="javascripts/magnific-popup.js" type="text/javascript"></script><script src="javascripts/jquery_006.js" type="text/javascript"></script>
-
-
-
+<script src="javascripts/bitCoinData.js"></script>
+<script>
+  setInterval("redraw()",2000);
+</script>
 </body></html>
