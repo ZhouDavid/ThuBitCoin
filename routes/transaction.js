@@ -14,22 +14,23 @@ function mySplit(line){
 
 function transferTime(timeStamp){
 	var date = new Date(timeStamp*1000000);
-	var time = date.getFullYear()+"年"+date.getMonth()+"月"+date.getDate()+"日"+date.getHours()+"点"+date.getMinutes()+"分"+date.getSeconds()+"秒";
+	var time = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+"-"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
 	return time;
 }
 
 function calAvg(priceList){
-	return ((priceList[4]*1)+(priceList[5]*1))/2;
+	var avg = ((priceList[4]*1)+(priceList[5]*1))/2;
+	return avg.toFixed(2);
 }
 
 function getVolume(record){
 	return record[10];
 }
 function getRMB(record){
-	return record[11];
+	return (record[11]*1).toFixed(2);
 }
 function getBTC(record){
-	return record[12];
+	return (record[12]*1).toFixed(2);
 }
 function getProb(record){
 	var len = record[13].length;
@@ -108,7 +109,7 @@ for(var i=0;i<lines.length;i++){
 // var myData=JSON.stringify(priceData)+'\n'+JSON.stringify(volumeData)+'\n'+JSON.stringify(summaryData)+'\n'+JSON.stringify(jsonData);
 // fs.writeFile('bitCoinData.js',myData);
 router.get('/', function(req, res, next) {
-	res.render('transaction',{datetime:datetime,price:price,buy:buy});
+	res.render('transaction',{datetime:datetime,price:price,buy:buy,RMBAccount:RMBAccount,BTCAccount:BTCAccount});
 });
 
 

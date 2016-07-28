@@ -491,7 +491,7 @@ width:auto;
                     <ul ng-show="market==='cnybtc'">
                         <li class="ng-binding">北京时间
                             <p>
-                                <span id="Beijing_time" class="last-cnybtc-live-ticker"><%=datetime[0]%></span>
+                                <span id="Beijing_time" style='font-size:18px;'><%=datetime[0]%></span>
                             </p>
                         </li>
                         <li class="ng-binding">最新价格
@@ -499,28 +499,24 @@ width:auto;
                                 ¥<span id="newest_price" class="last-cnybtc-live-ticker"><%=price[0]%></span>
                             </p>
                         </li>
-            <!--             <li class="ng-binding">买一 / 卖一
-                            <p>
-                                <span class="buy-color">¥<span id="buy_cnybtc">4,355.10</span></span> /
-                                <span class="sell-color">¥<span id="sell_cnybtc">4,356.79</span></span>
-                            </p>
-                        </li> -->
-                          <li class="ng-binding">买卖决定
-                            <p>
-                               <span id="buy_cnybtc" class="buy-color"><span >买</span></span> 
-                               <span  id="sell_cnybtc" class="sell-color"><span>卖</span></span>
-                            </p>
+                         <li class="ng-binding">买卖决定
+                        <p>
+                           <span id="buy_cnybtc" class="buy-color"><span >买</span></span> 
+                           <span  id="sell_cnybtc" class="sell-color"><span>卖</span></span>
+                        </p>
                          </li>
-                       <!--  <li class="ng-binding">价格范围
-                            <p>
-                                ¥<span id="low_cnybtc">4,311.00</span> - ¥<span id="high_cnybtc">4,381.00</span>
+                        <li class="ng-binding" style="text-align:left;">
+                            现金余额
+                            <p>￥<span id="rmb-account" class="last-cnybtc-live-ticker"><%=RMBAccount[0]%></span>
                             </p>
                         </li>
-                        <li class="last ng-binding">
-                            成交量
-                            <p>฿<span class="vol-cnybtc">123,369.173</span>
+                        <li class="ng-binding">
+                            比特币余额
+                            <p>฿<span id= 'btc-account' class="last-cnybtc-live-ticker"><%=BTCAccount[0]%></span>
                             </p>
-                        </li> -->
+                        </li> 
+                     
+                      
                     </ul>
                 </div>
               </section>
@@ -812,13 +808,17 @@ jQuery(function($){
   var beijing_time = '<%=datetime%>';
   var newest_price = '<%=price%>';
   var final_decision = '<%=buy%>';
+  var btcAccount = '<%=BTCAccount%>';
+  var rmbAccount = '<%=RMBAccount%>';
   beijing_time = beijing_time.split(','); 
   newest_price = newest_price.split(',');
   final_decision = final_decision.split(',');
+  btcAccount = btcAccount.split(',');
+  rmbAccount = rmbAccount.split(',');
   function refresh(){
     jQuery("#Beijing_time").text(beijing_time[i]);
     jQuery("#newest_price").text(newest_price[i]);
-    if(final_decision[i]=='1'){
+    if(final_decision[i]=='0'){
       jQuery("#buy_cnybtc").show();
       jQuery("#sell_cnybtc").hide();
     }
@@ -827,6 +827,8 @@ jQuery(function($){
       jQuery("#sell_cnybtc").show();
     }
     jQuery("#final_decision").text(final_decision[i]);
+    jQuery("#btc-account").text(btcAccount[i]);
+    jQuery("#rmb-account").text(rmbAccount[i]);
     i++;
   }
 
